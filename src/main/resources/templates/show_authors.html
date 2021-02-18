@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Authors</title>
+</head>
+<body>
+List of authors:
+<div th:each="author : ${authors}">
+    <p th:text="${author.getName()}"></p>
+</div>
+</body>
+</html>

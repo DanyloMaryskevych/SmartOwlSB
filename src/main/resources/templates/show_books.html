@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+</head>
+<body>
+Books:
+
+<h3><a href="/books/new">Add new</a></h3>
+<div th:each="book : ${book_author}">
+    <p th:text="${book_author.getTitle()}"></p>
+    <p th:text="${book_author.getAuthor()}"></p>
+    <p th:text="${book_author.getAmount()}"></p>
+</div>
+</body>
+</html>

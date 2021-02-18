@@ -1,0 +1,14 @@
+package com.spring_boot.smart_owl.repositories;
+
+import com.spring_boot.smart_owl.models.Book;
+import com.spring_boot.smart_owl.models.BookAuthor;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface BookRepository extends JpaRepository<Book, Long> {
+
+}
