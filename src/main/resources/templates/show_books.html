@@ -7,11 +7,13 @@
 <body>
 Books:
 
-<h3><a href="/books/new">Add new</a></h3>
-<div th:each="book : ${book_author}">
-    <p th:text="${book_author.getTitle()}"></p>
-    <p th:text="${book_author.getAuthor()}"></p>
-    <p th:text="${book_author.getAmount()}"></p>
+<div th:each="book : ${list}">
+    <p th:text="${book.getTitle()}"></p>
+    <p th:text="${book.getAuthor()}"></p>
+    <p th:text="${book.getAmount()}"></p>
 </div>
+
+<h3><a href="/books/new">Add new</a></h3>
+
 </body>
 </html>
