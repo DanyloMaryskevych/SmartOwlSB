@@ -1,6 +1,6 @@
 package com.spring_boot.smart_owl.controllers;
 
-import com.spring_boot.smart_owl.service.QueryService;
+import com.spring_boot.smart_owl.dao.BookAuthorDAO;
 import com.spring_boot.smart_owl.dao.AuthorDAO;
 import com.spring_boot.smart_owl.dao.BookDAO;
 import com.spring_boot.smart_owl.models.Author;
@@ -20,13 +20,12 @@ import java.util.List;
 @RequestMapping
 public class BookController {
 
-    @Autowired
-    QueryService queryService;
-
+    private final BookAuthorDAO bookAuthorDAO;
     private final AuthorDAO authorDAO;
     private final BookDAO bookDAO;
 
-    public BookController(AuthorDAO authorDAO, BookDAO bookDAO) {
+    public BookController(BookAuthorDAO bookAuthorDAO, AuthorDAO authorDAO, BookDAO bookDAO) {
+        this.bookAuthorDAO = bookAuthorDAO;
         this.authorDAO = authorDAO;
         this.bookDAO = bookDAO;
     }
@@ -45,7 +44,7 @@ public class BookController {
 
     @GetMapping("/books")
     public String getBooks(Model model) {
-        model.addAttribute("list", queryService.JPQLQuery());
+        model.addAttribute("list", bookAuthorDAO.getList());
         return "show_books";
     }
 
@@ -67,7 +66,7 @@ public class BookController {
         else {
             Author author = new Author(authorName);
             authorDAO.addAuthor(author);
-            authorId = authorDAO.findAuthor(authorName).get(0).getId();
+            authorId = author.getId();
         }
 
         Book book = new Book(

@@ -8,9 +8,9 @@
 Books:
 
 <div th:each="book : ${list}">
-    <p th:text="${book.getTitle()}"></p>
-    <p th:text="${book.getAuthor()}"></p>
-    <p th:text="${book.getAmount()}"></p>
+    <h2 th:text="${book.getTitle()}"></h2>
+    <h4 th:text="${'by ' + book.getAuthor()}"></h4>
+    <br/>
 </div>
 
 <h3><a href="/books/new">Add new</a></h3>

@@ -1,12 +1,27 @@
 package com.spring_boot.smart_owl.models;
 
-import javax.persistence.Column;
+import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.Subselect;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Immutable
+@Table(name = "'book_author'")
+@Subselect("select * from book_author")
 public class BookAuthor {
+
+    @Id
+    @Column(name = "id")
+    private Long id;
     private String title;
     private String description;
     private Double price;
     private Integer amount;
+    @Column(name = "name")
     private String author;
 
     public BookAuthor() {
@@ -50,5 +65,25 @@ public class BookAuthor {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "BookAuthor{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", amount=" + amount +
+                ", author='" + author + '\'' +
+                '}';
     }
 }
