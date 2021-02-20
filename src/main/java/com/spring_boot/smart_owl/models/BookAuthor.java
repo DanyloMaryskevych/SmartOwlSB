@@ -8,6 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/*
+                *** VIEW QUERY ***
+    create or replace view book_author as select
+    b.id, title, description, price, amount, name
+    from books b INNER JOIN authors a on b.author_id = a.id
+*/
+
 @Entity
 @Immutable
 @Table(name = "'book_author'")
@@ -73,17 +80,5 @@ public class BookAuthor {
 
     public Long getId() {
         return id;
-    }
-
-    @Override
-    public String toString() {
-        return "BookAuthor{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", amount=" + amount +
-                ", author='" + author + '\'' +
-                '}';
     }
 }

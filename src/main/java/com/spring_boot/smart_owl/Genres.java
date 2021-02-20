@@ -1,0 +1,28 @@
+package com.spring_boot.smart_owl;
+
+public enum Genres {
+    FANTASY,
+    ADVENTURE,
+    ROMANCE,
+    CONTEMPORARY,
+    DYSTOPIAN,
+    MYSTERY,
+    HORROR,
+    THRILLER,
+    PARANORMAL,
+    HISTORICAL_FICTION,
+    SCIENCE_DICTION,
+    MEMOIR,
+    COOKING,
+    ART,
+    PERSONAL,
+    DEVELOPMENT,
+    MOTIVATIONAL,
+    HEALTH,
+    HISTORY,
+    TRAVEL,
+    GUIDE,
+    FAMILIES_AND_RELATIONSHIPS,
+    HUMOR,
+    CHILDREN
+}

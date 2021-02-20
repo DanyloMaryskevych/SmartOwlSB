@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>New Book</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
 </head>
 <body>
 
@@ -25,5 +27,34 @@
     <input type="submit">
 </form>
 
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-4 mt-5">
+            <form method="post" action="/books" th:object="${genreList}">
+
+                <div class="form-group">
+                    <label for="genres">Select genres</label>
+                    <select class="form-control selectpicker" th:field="*{genres}" id="genres"
+                            multiple data-live-search="true">
+
+                        <option th:each="genre : ${T(com.spring_boot.smart_owl.Genres).values()}"
+                                th:value="${genre}"
+                                th:text="${genre}">genre
+                        </option>
+
+                    </select>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> <!--Important-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>
