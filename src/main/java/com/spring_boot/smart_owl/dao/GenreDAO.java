@@ -18,4 +18,8 @@ public class GenreDAO {
     public List<Genre> getGenres() {
         return genreRepository.findAll();
     }
+
+    public Genre getGenre(String genre) {
+        return genreRepository.findGenreByName(genre);
+    }
 }

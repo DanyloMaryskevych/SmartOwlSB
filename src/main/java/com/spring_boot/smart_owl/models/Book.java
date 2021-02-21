@@ -1,6 +1,8 @@
 package com.spring_boot.smart_owl.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "books")
 @Table(name = "books")
@@ -48,6 +50,16 @@ public class Book {
             nullable = false
     )
     private Long authorId;
+
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "book_genre",
+            joinColumns = { @JoinColumn(name = "book_id")},
+            inverseJoinColumns = { @JoinColumn(name = "genre_id")}
+    )
+    private Set<Genre> genreSet = new HashSet<>();
 
     public Book(String title, String description, String image, Double price, Integer amount, Long authorId) {
         this.title = title;
@@ -115,5 +127,9 @@ public class Book {
 
     public void setAuthorId(Long authorId) {
         this.authorId = authorId;
+    }
+
+    public Set<Genre> getGenreSet() {
+        return genreSet;
     }
 }

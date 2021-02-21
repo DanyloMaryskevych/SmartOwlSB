@@ -1,6 +1,8 @@
 package com.spring_boot.smart_owl.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /*                  *** Add Genres ****
     insert into all_genres(genre) VALUES ('Fantasy');
@@ -30,7 +32,7 @@ import javax.persistence.*;
 
 */
 
-@Entity
+@Entity(name = "all_genres")
 @Table(name = "all_genres")
 public class Genre {
 
@@ -42,11 +44,33 @@ public class Genre {
     @Column(name = "genre")
     private String genre;
 
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "genreSet"
+    )
+    private Set<Book> bookSet = new HashSet<>();
+
+    public Genre() {
+    }
+
+    public Genre(String genre) {
+        this.genre = genre;
+    }
+
     public Long getId() {
         return id;
     }
 
     public String getGenre() {
         return genre;
+    }
+
+    public Set<Book> getBookSet() {
+        return bookSet;
+    }
+
+    public void setBookSet(Set<Book> bookSet) {
+        this.bookSet = bookSet;
     }
 }

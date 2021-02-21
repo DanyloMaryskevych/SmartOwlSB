@@ -1,13 +1,7 @@
 package com.spring_boot.smart_owl.controllers;
 
-import com.spring_boot.smart_owl.dao.BookAuthorDAO;
-import com.spring_boot.smart_owl.dao.AuthorDAO;
-import com.spring_boot.smart_owl.dao.BookDAO;
-import com.spring_boot.smart_owl.dao.GenreDAO;
-import com.spring_boot.smart_owl.models.Author;
-import com.spring_boot.smart_owl.models.Book;
-import com.spring_boot.smart_owl.models.BookAuthor;
-import com.spring_boot.smart_owl.models.BookDTO;
+import com.spring_boot.smart_owl.dao.*;
+import com.spring_boot.smart_owl.models.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +17,10 @@ public class BookController {
     private final BookDAO bookDAO;
     private final GenreDAO genreDAO;
 
-    public BookController(BookAuthorDAO bookAuthorDAO, AuthorDAO authorDAO, BookDAO bookDAO, GenreDAO genreDAO) {
+    public BookController(BookAuthorDAO bookAuthorDAO,
+                          AuthorDAO authorDAO,
+                          BookDAO bookDAO,
+                          GenreDAO genreDAO) {
         this.bookAuthorDAO = bookAuthorDAO;
         this.authorDAO = authorDAO;
         this.bookDAO = bookDAO;
@@ -57,9 +54,8 @@ public class BookController {
     }
 
     @PostMapping("/books")
-    public String addBook(
-//            @ModelAttribute("book_author") BookAuthor bookAuthor,
-            Model model, BookDTO bookDTO) {
+    public String addBook(Model model,
+                          BookDTO bookDTO) {
 
         model.addAttribute("book_dto", bookDTO);
 
@@ -79,7 +75,13 @@ public class BookController {
         Book book = new Book(
                 bookDTO.getTitle(), bookDTO.getDescription(), bookDTO.getImage(),
                 bookDTO.getPrice(), bookDTO.getAmount(), authorId);
+
+        for (String genreString : bookDTO.getAllGenres()) {
+            Genre genre = genreDAO.getGenre(genreString);
+            book.getGenreSet().add(genre);
+        }
         bookDAO.addBook(book);
+
         return "redirect:";
     }
 }

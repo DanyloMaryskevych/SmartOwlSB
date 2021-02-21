@@ -8,23 +8,6 @@ import java.util.List;
 @Table(name = "authors")
 public class Author {
 
-//    @Id
-//    @SequenceGenerator(
-//            name = "authors_sequence",
-//            sequenceName = "authors_sequence",
-//            allocationSize = 1,
-//            initialValue = 2
-//    )
-//    @GeneratedValue(
-//            strategy = GenerationType.SEQUENCE,
-//            generator = "authors_sequence"
-//    )
-//    @Column(
-//            name = "id",
-//            updatable = false,
-//            nullable = false
-//    )
-//    private Long id;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
