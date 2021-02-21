@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Immutable
 @Table(name = "'book_author'")
 @Subselect("select * from book_author")
-public class BookAuthor {
+public class  BookAuthor {
 
     @Id
     @Column(name = "id")

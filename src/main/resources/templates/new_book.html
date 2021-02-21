@@ -66,8 +66,12 @@
 
             <div class="form-group">
                 <label for="genres_id">Select genres</label>
-                <select class="form-control selectpicker" th:field="*{allGenres}" id="genres_id"
-                        multiple data-live-search="true">
+                <select  data-dropup-auto="false"
+                         data-size="8"
+                         class="form-control selectpicker show-menu-arrow"
+                         th:field="*{allGenres}"
+                         id="genres_id"
+                         multiple data-live-search="true">
 
                     <option th:each="genre : ${genres}"
                             th:value="${genre.getGenre()}"

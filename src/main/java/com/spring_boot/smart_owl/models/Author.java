@@ -53,5 +53,4 @@ public class Author {
     public List<Book> getBookList() {
         return bookList;
     }
-
 }

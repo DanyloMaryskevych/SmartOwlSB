@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -13,15 +14,18 @@ import java.util.List;
 public class BookController {
 
     private final BookAuthorDAO bookAuthorDAO;
+    private final BookGenreDAO bookGenreDAO;
     private final AuthorDAO authorDAO;
     private final BookDAO bookDAO;
     private final GenreDAO genreDAO;
 
     public BookController(BookAuthorDAO bookAuthorDAO,
+                          BookGenreDAO bookGenreDAO,
                           AuthorDAO authorDAO,
                           BookDAO bookDAO,
                           GenreDAO genreDAO) {
         this.bookAuthorDAO = bookAuthorDAO;
+        this.bookGenreDAO = bookGenreDAO;
         this.authorDAO = authorDAO;
         this.bookDAO = bookDAO;
         this.genreDAO = genreDAO;
@@ -41,7 +45,31 @@ public class BookController {
 
     @GetMapping("/books")
     public String getBooks(Model model) {
+
         model.addAttribute("list", bookAuthorDAO.getList());
+        List<BookAuthor> bookAuthorList = bookAuthorDAO.getList();
+        List<BookGenre> bookGenreList = bookGenreDAO.getBookGenres();
+
+        int counter = 0;
+
+        for (BookAuthor bookAuthor :bookAuthorList) {
+            List<String> genres = new ArrayList<>();
+            Long id = bookAuthor.getId();
+
+            for (int i = counter; i < bookGenreList.size(); i++) {
+
+                if (id.equals(bookGenreList.get(i).getBookId())) genres.add(bookGenreList.get(i).getGenre());
+
+                else {
+                    counter = i;
+                    break;
+                }
+            }
+            System.out.println("Book #" + id + ", title: " + bookAuthor.getTitle());
+            System.out.println(genres);
+        }
+
+
         return "show_books";
     }
 

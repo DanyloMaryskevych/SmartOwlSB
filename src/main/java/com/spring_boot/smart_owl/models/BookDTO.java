@@ -70,16 +70,4 @@ public class BookDTO {
     public void setAllGenres(List<String> allGenres) {
         this.allGenres = allGenres;
     }
-
-    @Override
-    public String toString() {
-        return "BookDTO{" +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", amount=" + amount +
-                ", author='" + author + '\'' +
-                ", allGenres=" + allGenres +
-                '}';
-    }
 }
