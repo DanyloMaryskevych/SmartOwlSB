@@ -6,6 +6,7 @@ public class BookDTO {
 
     private String title;
     private String description;
+    private String image;
     private Double price;
     private Integer amount;
     private String author;
@@ -28,6 +29,14 @@ public class BookDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Double getPrice() {

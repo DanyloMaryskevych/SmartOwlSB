@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
 
-
 </head>
 <body>
+
 <div style="margin-left: 100px; margin-bottom: 30px">
     <h2>Adding Book to Smart Owl Library</h2>
 </div>
@@ -30,10 +30,17 @@
         </div>
     </div>
 
-    <div class="row mt-4 w-100">
+    <div class="row mt-4">
         <div class="col">
             <label for="description_id">Description</label>
             <textarea class="form-control" th:field="*{description}" id="description_id" rows="3"></textarea>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <label for="image_id">Image</label>
+            <input class="form-control" type="text" th:field="*{image}" id="image_id">
         </div>
     </div>
 

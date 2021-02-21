@@ -25,6 +25,13 @@ public class Book {
     private String description;
 
     @Column(
+            name = "image",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
+    private String image;
+
+    @Column(
             name = "price",
             nullable = false
     )
@@ -42,15 +49,24 @@ public class Book {
     )
     private Long authorId;
 
-    public Book(String title, String description, Double price, Integer amount, Long authorId) {
+    public Book(String title, String description, String image, Double price, Integer amount, Long authorId) {
         this.title = title;
         this.description = description;
+        this.image = image;
         this.price = price;
         this.amount = amount;
         this.authorId = authorId;
     }
 
     public Book() {
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Long getId() {

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 /*
                 *** VIEW QUERY ***
     create or replace view book_author as select
-    b.id, title, description, price, amount, name
+    b.id, title, description, image, price, amount, name
     from books b INNER JOIN authors a on b.author_id = a.id
 */
 
@@ -26,6 +26,7 @@ public class BookAuthor {
     private Long id;
     private String title;
     private String description;
+    private String image;
     private Double price;
     private Integer amount;
     @Column(name = "name")
@@ -48,6 +49,14 @@ public class BookAuthor {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Double getPrice() {

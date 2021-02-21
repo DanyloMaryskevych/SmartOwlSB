@@ -77,7 +77,7 @@ public class BookController {
         }
 
         Book book = new Book(
-                bookDTO.getTitle(), bookDTO.getDescription(),
+                bookDTO.getTitle(), bookDTO.getDescription(), bookDTO.getImage(),
                 bookDTO.getPrice(), bookDTO.getAmount(), authorId);
         bookDAO.addBook(book);
         return "redirect:";
