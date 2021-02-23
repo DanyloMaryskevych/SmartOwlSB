@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,28 +45,33 @@ public class BookController {
     @GetMapping("/books")
     public String getBooks(Model model) {
 
-        model.addAttribute("list", bookAuthorDAO.getList());
-        List<BookAuthor> bookAuthorList = bookAuthorDAO.getList();
+        model.addAttribute("book_author_list", bookAuthorDAO.getBookAuthors());
+        List<BookAuthor> bookAuthorList = bookAuthorDAO.getBookAuthors();
         List<BookGenre> bookGenreList = bookGenreDAO.getBookGenres();
 
-        int counter = 0;
+        List<BookAuthor> prices= bookAuthorDAO.getByPrice(12.0);
+        Double value = bookAuthorDAO.getSum();
+//        int counter = 0;
+//
+//        for (BookAuthor bookAuthor :bookAuthorList) {
+//            List<String> genres = new ArrayList<>();
+//            Long id = bookAuthor.getId();
+//
+//            for (int i = counter; i < bookGenreList.size(); i++) {
+//
+//                if (id.equals(bookGenreList.get(i).getBookId())) genres.add(bookGenreList.get(i).getGenre());
+//
+//                else {
+//                    counter = i;
+//                    break;
+//                }
+//            }
+//            System.out.println("Book #" + id + ", title: " + bookAuthor.getTitle());
+//            System.out.println(genres);
+//        }
 
-        for (BookAuthor bookAuthor :bookAuthorList) {
-            List<String> genres = new ArrayList<>();
-            Long id = bookAuthor.getId();
-
-            for (int i = counter; i < bookGenreList.size(); i++) {
-
-                if (id.equals(bookGenreList.get(i).getBookId())) genres.add(bookGenreList.get(i).getGenre());
-
-                else {
-                    counter = i;
-                    break;
-                }
-            }
-            System.out.println("Book #" + id + ", title: " + bookAuthor.getTitle());
-            System.out.println(genres);
-        }
+        System.out.println(prices.size());
+        System.out.println(value);
 
 
         return "show_books";
@@ -111,5 +115,12 @@ public class BookController {
         bookDAO.addBook(book);
 
         return "redirect:";
+    }
+
+    @GetMapping("/books/{id}")
+    public String getBook(@PathVariable Long id,
+                          Model model) {
+        model.addAttribute("current_book", bookAuthorDAO.getBookAuthorById(id));
+        return "book";
     }
 }

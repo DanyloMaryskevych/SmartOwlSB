@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Books</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-Books:
 
-<div th:each="book : ${list}">
-    <h2 th:text="${book.getTitle()}"></h2>
-    <h4 th:text="${'by ' + book.getAuthor()}"></h4>
-    <br/>
+<div class="container">
+    <div class="m-lg-3 row">
+        <div class="col-md-3 p-2" align="center" th:each="book : ${book_author_list}">
+            <h4>
+                <a style="color: black" th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle()}"></a>
+            </h4>
+            <h5 th:text="${'by ' + book.getAuthor()}"></h5>
+            <p th:text="${book.getPrice() + '$'}"></p>
+<!--            <img class="img-thumbnail" width="200" height="380" th:src="${book.getImage()}" alt="">-->
+        </div>
+    </div>
 </div>
 
 <h3><a href="/books/new">Add new</a></h3>

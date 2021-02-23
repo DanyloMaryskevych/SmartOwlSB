@@ -16,7 +16,19 @@ public class BookAuthorDAO {
         this.bookAuthorRepository = bookAuthorRepository;
     }
 
-    public List<BookAuthor> getList() {
+    public List<BookAuthor> getBookAuthors() {
         return bookAuthorRepository.findAll();
+    }
+
+    public List<BookAuthor> getByPrice(Double price) {
+        return bookAuthorRepository.findBookAuthorByPrice(price);
+    }
+
+    public Double getSum() {
+        return bookAuthorRepository.getSum();
+    }
+
+    public BookAuthor getBookAuthorById(Long id) {
+        return bookAuthorRepository.findBookAuthorById(id);
     }
 }

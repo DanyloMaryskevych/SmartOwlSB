@@ -4,8 +4,6 @@ import com.spring_boot.smart_owl.models.Book;
 import com.spring_boot.smart_owl.repositories.BookRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class BookDAO {
 
