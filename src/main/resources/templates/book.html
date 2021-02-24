@@ -1,24 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link href="/star.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
     <title>Book</title>
 </head>
 <body>
 
-<div class="row container w-25">
-    <div class="starrating risingstar d-flex flex-row-reverse">
-        <input type="radio" id="star5" name="rating"/><label for="star5"></label>
-        <input type="radio" id="star4" name="rating"/><label for="star4"></label>
-        <input type="radio" id="star3" name="rating"/><label for="star3"></label>
-        <input type="radio" id="star2" name="rating"/><label for="star2"></label>
-        <input type="radio" id="star1" name="rating"/><label for="star1"></label>
+
+<div class="container mt-2 m-lg-3">
+    <div class="row">
+        <!--Image block-->
+        <div class="col-2">
+            <img class="img-thumbnail" style="width:100%" th:src="${current_book.getImage()}">
+        </div>
+
+        <!--Text block-->
+        <div class="col-5" style="height: 300px">
+            <h3 th:text="${current_book.getTitle()}">value</h3>
+            <h5 th:text="${'by ' + current_book.getAuthor()}">value</h5>
+
+            <!--Description collapse-->
+            <div class="mt-4">
+                <a
+                        onclick="myFunction()"
+                        class="btn-link hide"
+                        data-toggle="collapse"
+                        href="#collapseExample"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="collapseExample"
+                >
+                    <div id="myDIV">Read description</div>
+                </a>
+                <div class="collapse" id="collapseExample">
+                    <p th:text="${current_book.getDescription()}"></p>
+                </div>
+            </div>
+
+            <form th:method="POST" th:action="@{/books/{id}(id=${current_book.getId()})}"
+                  th:object="${current_rating}">
+                <div class="container">
+                    <div class=" flex-row-reverse d-flex justify-content-center">
+
+                        <div class="starrating" th:each="rating : ${ratings}">
+                            <input type="radio" th:id="${'star' + rating.getId()}" th:field="*{value}"
+                                   name="rating" th:value="${rating.getValue()}">
+                            <label th:for="${'star' + rating.getId()}"></label>
+                        </div>
+
+                    </div>
+
+                </div>
+                <input type="submit" value="Rate">
+            </form>
+
+
+
+        </div>
     </div>
+    <p th:text="${'Price: ' + current_book.getPrice() + '$'}"></p>
 </div>
+
+<!--Change text on-click function on collapse link-->
+<script>
+    function myFunction() {
+        var x = document.getElementById("myDIV");
+        if (x.innerHTML === "Read description") {
+            x.innerHTML = "Close description";
+        } else {
+            x.innerHTML = "Read description";
+        }
+    }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </body>
 </html>

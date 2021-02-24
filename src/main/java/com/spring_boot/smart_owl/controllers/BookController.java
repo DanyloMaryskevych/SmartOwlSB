@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping
@@ -17,17 +19,20 @@ public class BookController {
     private final AuthorDAO authorDAO;
     private final BookDAO bookDAO;
     private final GenreDAO genreDAO;
+    private final RatingDAO ratingDAO;
 
     public BookController(BookAuthorDAO bookAuthorDAO,
                           BookGenreDAO bookGenreDAO,
                           AuthorDAO authorDAO,
                           BookDAO bookDAO,
-                          GenreDAO genreDAO) {
+                          GenreDAO genreDAO,
+                          RatingDAO ratingDAO) {
         this.bookAuthorDAO = bookAuthorDAO;
         this.bookGenreDAO = bookGenreDAO;
         this.authorDAO = authorDAO;
         this.bookDAO = bookDAO;
         this.genreDAO = genreDAO;
+        this.ratingDAO = ratingDAO;
     }
 
     @GetMapping("/authors")
@@ -48,9 +53,6 @@ public class BookController {
         model.addAttribute("book_author_list", bookAuthorDAO.getBookAuthors());
         List<BookAuthor> bookAuthorList = bookAuthorDAO.getBookAuthors();
         List<BookGenre> bookGenreList = bookGenreDAO.getBookGenres();
-
-        List<BookAuthor> prices= bookAuthorDAO.getByPrice(12.0);
-        Double value = bookAuthorDAO.getSum();
 //        int counter = 0;
 //
 //        for (BookAuthor bookAuthor :bookAuthorList) {
@@ -69,9 +71,6 @@ public class BookController {
 //            System.out.println("Book #" + id + ", title: " + bookAuthor.getTitle());
 //            System.out.println(genres);
 //        }
-
-        System.out.println(prices.size());
-        System.out.println(value);
 
 
         return "show_books";
@@ -121,6 +120,17 @@ public class BookController {
     public String getBook(@PathVariable Long id,
                           Model model) {
         model.addAttribute("current_book", bookAuthorDAO.getBookAuthorById(id));
+        model.addAttribute("ratings", ratingDAO.getRatings());
+        model.addAttribute("current_rating", new Rating());
         return "book";
+    }
+
+    @PostMapping("/books/{id}")
+    public String addRating(@PathVariable Long id,
+                            Model model,
+                            Rating rating) {
+        model.addAttribute("current_rating", rating);
+        System.out.println(rating);
+        return "redirect:/books/{id}";
     }
 }
