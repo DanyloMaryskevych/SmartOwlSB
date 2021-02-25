@@ -144,7 +144,6 @@ public class BookController {
         bookDAO.deleteBook(id);
         if (authorsCounter == 1) {
             authorDAO.deleteAuthor(authorId);
-            System.out.println("Deleted**************************************************");
         }
         return "redirect:/books";
     }
