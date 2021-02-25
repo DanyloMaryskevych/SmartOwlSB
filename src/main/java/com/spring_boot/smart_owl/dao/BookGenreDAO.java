@@ -18,4 +18,9 @@ public class BookGenreDAO {
     public List<BookGenre> getBookGenres() {
         return bookGenreRepository.findAll();
     }
+
+    public List<BookGenre> findBookGenresById(Long id) {
+        return bookGenreRepository.findBookGenresById(id);
+    }
+
 }

@@ -116,6 +116,9 @@ public class BookController {
     public String getBook(@PathVariable Long id,
                           Model model) {
         model.addAttribute("current_book", bookAuthorDAO.getBookAuthorById(id));
+        List<BookGenre> bookGenreList = bookGenreDAO.findBookGenresById(id);
+        System.out.println(bookGenreList.size() + " ************************************************************");
+        model.addAttribute("current_book_genres", bookGenreDAO.findBookGenresById(id));
         model.addAttribute("ratings", ratingDAO.getRatings());
         model.addAttribute("current_rating", new Rating());
         return "book";

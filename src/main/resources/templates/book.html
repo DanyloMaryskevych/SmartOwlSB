@@ -25,6 +25,13 @@
             <h3 th:text="${current_book.getTitle()}">value</h3>
             <h5 th:text="${'by ' + current_book.getAuthor()}">value</h5>
 
+            <!--Genres-->
+            <div class="d-flex">
+                <div th:each="book_genre : ${current_book_genres}">
+                    <a href="#" th:text="${book_genre.getGenre()}" class="btn btn-secondary btn-sm" style="margin: 2px"></a>
+                </div>
+            </div>
+
             <!--Description collapse-->
             <div class="mt-4">
                 <a
@@ -43,8 +50,8 @@
                 </div>
             </div>
 
+            <!--Price-->
             <p th:text="${'Price: ' + current_book.getPrice() + '$'}"></p>
-
         </div>
     </div>
 
@@ -81,8 +88,10 @@
 
 </div>
 
+
 <a style="margin-left: 20px" class="btn btn-danger" th:href="@{/books/{id}(id=${current_book.getId()})}" data-toggle="modal" data-target="#modalWindow">DELETE</a>
 
+<!--DELETE Modal window-->
 <div id="modalWindow" tabindex="-1" class="modal mt-5 fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">

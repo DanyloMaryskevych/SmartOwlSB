@@ -20,14 +20,6 @@ public class BookAuthorDAO {
         return bookAuthorRepository.findAll();
     }
 
-    public List<BookAuthor> getByPrice(Double price) {
-        return bookAuthorRepository.findBookAuthorByPrice(price);
-    }
-
-    public Double getSum() {
-        return bookAuthorRepository.getSum();
-    }
-
     public BookAuthor getBookAuthorById(Long id) {
         return bookAuthorRepository.findBookAuthorById(id);
     }
