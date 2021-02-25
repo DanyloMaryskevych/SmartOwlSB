@@ -17,4 +17,20 @@ public class BookDAO {
         bookRepository.save(book);
     }
 
+    public void updateRating(Double rating, Long id) {
+        bookRepository.updateBookRating(rating, id);
+    }
+
+    public void deleteBook(Long id) {
+        bookRepository.deleteById(id);
+    }
+
+    public Book getBookById(Long id) {
+        return bookRepository.getOne(id);
+    }
+
+    public Integer countAuthorsById(Long id) {
+        return bookRepository.countAuthorsById(id);
+    }
+
 }

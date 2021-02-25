@@ -46,7 +46,7 @@ public class Genre {
 
     @ManyToMany(
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
+//            cascade = CascadeType.ALL,
             mappedBy = "genreSet"
     )
     private Set<Book> bookSet = new HashSet<>();

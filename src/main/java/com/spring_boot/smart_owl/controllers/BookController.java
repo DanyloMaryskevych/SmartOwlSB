@@ -41,11 +41,6 @@ public class BookController {
         return "show_authors";
     }
 
-    @PostMapping("/authors")
-    public String addAuthor(@ModelAttribute("author") Author author) {
-        authorDAO.addAuthor(author);
-        return "redirect:";
-    }
 
     @GetMapping("/books")
     public String getBooks(Model model) {
@@ -78,7 +73,6 @@ public class BookController {
 
     @GetMapping("/books/new")
     public String newBook(Model model) {
-//        model.addAttribute("book_author", new BookAuthor());
         model.addAttribute("book_dto", new BookDTO());
         model.addAttribute("genres", genreDAO.getGenres());
         return "new_book";
@@ -111,6 +105,8 @@ public class BookController {
             Genre genre = genreDAO.getGenre(genreString);
             book.getGenreSet().add(genre);
         }
+        book.setRating(0.0);
+        book.setVotes(0);
         bookDAO.addBook(book);
 
         return "redirect:";
@@ -130,7 +126,23 @@ public class BookController {
                             Model model,
                             Rating rating) {
         model.addAttribute("current_rating", rating);
-        System.out.println(rating);
+        if (rating.getValue() != null) bookDAO.updateRating(rating.getValue(), id);
         return "redirect:/books/{id}";
+    }
+
+    @PostMapping("/books/{id}/delete")
+    public String deleteBookGet(@PathVariable Long id) {
+        Long authorId = bookDAO.getBookById(id).getAuthorId();
+        System.out.println(authorId);
+        Integer authorsCounter = bookDAO.countAuthorsById(authorId);
+        System.out.println(authorsCounter);
+
+
+        bookDAO.deleteBook(id);
+        if (authorsCounter == 1) {
+            authorDAO.deleteAuthor(authorId);
+            System.out.println("Deleted**************************************************");
+        }
+        return "redirect:/books";
     }
 }

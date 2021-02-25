@@ -27,4 +27,9 @@ public class AuthorDAO {
     public List<Author> findAuthor(String name) {
         return authorRepository.findAuthorByName(name);
     }
+
+    public void deleteAuthor(Long id) {
+        authorRepository.deleteById(id);
+    }
+
 }

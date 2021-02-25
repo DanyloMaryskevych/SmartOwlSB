@@ -11,8 +11,9 @@ import javax.persistence.Table;
 /*
                 *** VIEW QUERY ***
     create or replace view book_author as select
-    b.id, title, description, image, price, amount, name
-    from books b INNER JOIN authors a on b.author_id = a.id
+    b.id, round( cast(float8(rating) as numeric), 2) as rating,
+    votes, title, description, image, price, amount, name
+    from books b INNER JOIN authors a on b.author_id = a.id;
 */
 
 @Entity
@@ -31,6 +32,8 @@ public class  BookAuthor {
     private Integer amount;
     @Column(name = "name")
     private String author;
+    private Double rating;
+    private Integer votes;
 
     public BookAuthor() {
     }
@@ -89,5 +92,21 @@ public class  BookAuthor {
 
     public Long getId() {
         return id;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public Integer getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Integer votes) {
+        this.votes = votes;
     }
 }

@@ -20,7 +20,7 @@ public class Rating {
     private Long id;
 
     @Column(name = "value")
-    private int value;
+    private Double value;
 
     @Column(name = "comment")
     private String comment;
@@ -36,11 +36,11 @@ public class Rating {
         this.id = id;
     }
 
-    public int getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 

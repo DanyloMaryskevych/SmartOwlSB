@@ -51,9 +51,16 @@ public class Book {
     )
     private Long authorId;
 
+    @Column
+    private Double rating;
+
+    @Column
+    private Integer votes;
+
     @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            fetch = FetchType.LAZY
+//            cascade = CascadeType.ALL
+            )
     @JoinTable(
             name = "book_genre",
             joinColumns = { @JoinColumn(name = "book_id")},
@@ -127,6 +134,22 @@ public class Book {
 
     public void setAuthorId(Long authorId) {
         this.authorId = authorId;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public Integer getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Integer votes) {
+        this.votes = votes;
     }
 
     public Set<Genre> getGenreSet() {
