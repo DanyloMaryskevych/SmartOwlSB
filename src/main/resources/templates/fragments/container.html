@@ -1,0 +1,20 @@
+<div th:fragment="container" xmlns:th="http://www.w3.org/1999/xhtml"
+        style="background-image: url(https://miro.medium.com/max/11914/0*L5spudfxjpJRzWFL); width: 100%; z-index: 1">
+    <div style="
+        min-height: 900px;
+        background-color: white;
+        z-index: 2;
+        max-width: 75%" class="container">
+
+        <div class="row">
+            <div class="col-md-3 mt-2" align="center" th:each="book : ${list}">
+                <h4>
+                    <a style="color: black" th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle()}"></a>
+                </h4>
+                <h5 th:text="${'by ' + book.getAuthor()}"></h5>
+                <p th:text="${book.getPrice() + '$'}"></p>
+                <img class="img-thumbnail" width="200" height="300" th:src="${book.getImage()}" alt="">
+            </div>
+        </div>
+    </div>
+</div>

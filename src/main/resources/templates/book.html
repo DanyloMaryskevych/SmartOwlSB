@@ -6,80 +6,24 @@
     <link href="/star.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>Book</title>
 </head>
 <body>
 
-<!--Nav bar-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="row justify-content-between w-100">
-
-        <!--Left elements-->
-        <div class="col">
-            <div class="d-flex justify-content-start">
-
-                <!--Logo-->
-                <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="/">
-                    <img
-                        src="https://image.flaticon.com/icons/png/512/43/43556.png"
-                        height="50"
-                        alt=""
-                        style="margin-top: 2px;"
-                    />
-                </a>
-
-                <!--Links-->
-                <div class="w-auto my-auto d-none d-sm-flex">
-                    <ul class="navbar-nav mr-auto">
-                        <li style="margin-left: 5px"  class="nav-item active">
-                            <a class="nav-link btn btn-light" href="/books">Store</a>
-                        </li>
-                        <li style="margin-left: 5px" class="nav-item active">
-                            <a class="nav-link btn btn-light" href="/authors">Authors</a>
-                        </li>
-                        <li style="margin-left: 5px" class="nav-item active">
-                            <a class="nav-link btn btn-light" href="/">Genres</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Center elements -->
-        <div class="col">
-            <div class="d-flex justify-content-center">
-                <h1>Smart Owl</h1>
-            </div>
-        </div>
-
-        <!-- Right elements -->
-        <div class="col">
-            <div class="d-flex justify-content-end">
-                <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-                    <img
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm6gzGJM5cK-94itPlBy6r4TClx1iVS1z02g&usqp=CAU"
-                            height="40"
-                            alt=""
-                            style="margin-top: 2px;"
-                    />
-                </a>
-            </div>
-        </div>
-
-    </div>
-</nav>
+<!--Navbar fragment-->
+<div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="container mt-2 m-lg-3">
     <div class="row">
         <!--Image block-->
         <div class="col-2">
-            <img class="img-thumbnail" style="width:100%" th:src="${current_book.getImage()}">
+            <img class="img-thumbnail" style="width:200px" th:src="${current_book.getImage()}">
         </div>
 
         <!--Text block-->
-        <div class="col-5" style="height: 300px">
+        <div class="col-5" style="height: 250px">
             <h3 th:text="${current_book.getTitle()}">value</h3>
             <h5 th:text="${'by ' + current_book.getAuthor()}">value</h5>
 
@@ -137,7 +81,7 @@
             </form>
 
             <!--Rating info-->
-            <div>
+            <div style="width: 200px;">
                 Rating: <span th:text="${current_book.getRating()}"></span>
                 by <span th:text="${current_book.getVotes()}"></span> vote(s)
             </div>

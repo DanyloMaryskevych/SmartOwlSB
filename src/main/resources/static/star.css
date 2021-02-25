@@ -5,7 +5,7 @@
 
 .starrating > label:before {
     content: "\f005"; /* Star */
-    margin: 2px;
+    /*margin: 2px;*/
     font-size: 1em;
     font-family: FontAwesome;
     display: inline-block;

@@ -6,9 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping
@@ -38,37 +36,18 @@ public class BookController {
     @GetMapping("/authors")
     public String getAuthors(Model model) {
         model.addAttribute("authors", authorDAO.showAuthors());
-        return "show_authors";
+        return "authors";
     }
 
+    @GetMapping("/genres")
+    public String getGenres(Model model) {
+        return "genres";
+    }
 
     @GetMapping("/books")
     public String getBooks(Model model) {
-
         model.addAttribute("book_author_list", bookAuthorDAO.getBookAuthors());
-        List<BookAuthor> bookAuthorList = bookAuthorDAO.getBookAuthors();
-        List<BookGenre> bookGenreList = bookGenreDAO.getBookGenres();
-//        int counter = 0;
-//
-//        for (BookAuthor bookAuthor :bookAuthorList) {
-//            List<String> genres = new ArrayList<>();
-//            Long id = bookAuthor.getId();
-//
-//            for (int i = counter; i < bookGenreList.size(); i++) {
-//
-//                if (id.equals(bookGenreList.get(i).getBookId())) genres.add(bookGenreList.get(i).getGenre());
-//
-//                else {
-//                    counter = i;
-//                    break;
-//                }
-//            }
-//            System.out.println("Book #" + id + ", title: " + bookAuthor.getTitle());
-//            System.out.println(genres);
-//        }
-
-
-        return "show_books";
+        return "store";
     }
 
     @GetMapping("/books/new")
@@ -109,15 +88,13 @@ public class BookController {
         book.setVotes(0);
         bookDAO.addBook(book);
 
-        return "redirect:";
+        return "redirect:/books";
     }
 
     @GetMapping("/books/{id}")
     public String getBook(@PathVariable Long id,
                           Model model) {
         model.addAttribute("current_book", bookAuthorDAO.getBookAuthorById(id));
-        List<BookGenre> bookGenreList = bookGenreDAO.findBookGenresById(id);
-        System.out.println(bookGenreList.size() + " ************************************************************");
         model.addAttribute("current_book_genres", bookGenreDAO.findBookGenresById(id));
         model.addAttribute("ratings", ratingDAO.getRatings());
         model.addAttribute("current_rating", new Rating());
@@ -136,10 +113,7 @@ public class BookController {
     @PostMapping("/books/{id}/delete")
     public String deleteBookGet(@PathVariable Long id) {
         Long authorId = bookDAO.getBookById(id).getAuthorId();
-        System.out.println(authorId);
         Integer authorsCounter = bookDAO.countAuthorsById(authorId);
-        System.out.println(authorsCounter);
-
 
         bookDAO.deleteBook(id);
         if (authorsCounter == 1) {
