@@ -8,91 +8,103 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
 <!--Navbar fragment-->
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<div style="margin-left: 100px; margin-bottom: 30px">
-    <h2>Adding Book to Smart Owl Library</h2>
+<!--Container-->
+<div style="background-image: url(https://miro.medium.com/max/11914/0*L5spudfxjpJRzWFL); width: 100%; z-index: 1">
+    <div style="
+        min-height: 900px;
+        background-color: white;
+        z-index: 2;
+        max-width: 75%" class="container">
+
+        <form th:method="POST" th:action="@{/books}" th:object="${book_dto}"
+              style="width: 600px; margin: auto;  font-size: 18px">
+            <h2>Adding Book to Smart Owl Library</h2>
+
+            <div class="row justify-content-between">
+                <div class="col">
+                    <label for="title_id">Title</label>
+                    <input class="form-control" type="text" th:field="*{title}" id="title_id">
+                </div>
+
+                <div class="col">
+                    <label for="author_id">Author</label>
+                    <input class="form-control" type="text" th:field="*{author}" id="author_id">
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col">
+                    <label for="description_id">Description</label>
+                    <textarea class="form-control" th:field="*{description}" id="description_id" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col">
+                    <label for="image_id">Image</label>
+                    <input class="form-control" type="text" th:field="*{image}" id="image_id">
+                </div>
+            </div>
+
+            <div class="row mt-4 w-75">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="price_id">Price</label>
+                        <input class="form-control" type="text" th:field="*{price}" id="price_id">
+                    </div>
+                </div>
+
+                <div class="col-3 offset-md-3">
+                    <div class="form-group">
+                        <label for="amount_id">Amount</label>
+                        <input class="form-control" type="text" th:field="*{amount}" id="amount_id">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row w-50">
+                <div class="col mt-5">
+
+                    <div class="form-group">
+                        <label for="genres_id">Select genres</label>
+                        <select  data-dropup-auto="false"
+                                 data-size="8"
+                                 class="form-control selectpicker show-menu-arrow"
+                                 th:field="*{allGenres}"
+                                 id="genres_id"
+                                 multiple data-live-search="true">
+
+                            <option th:each="genre : ${genres}"
+                                    th:value="${genre.getGenre()}"
+                                    th:text="${genre.getGenre()}">genre
+                            </option>
+
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 offset-md-8">
+                    <button class="btn btn-success" type="submit">Add Book</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
 </div>
 
-<form th:method="POST" th:action="@{/books}" th:object="${book_dto}"
-        style="width: 600px; margin-left: 25px; margin-top: 25px; font-size: 18px">
-
-    <div class="row justify-content-between">
-        <div class="col">
-            <label for="title_id">Title</label>
-            <input class="form-control" type="text" th:field="*{title}" id="title_id">
-        </div>
-
-        <div class="col">
-            <label for="author_id">Author</label>
-            <input class="form-control" type="text" th:field="*{author}" id="author_id">
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col">
-            <label for="description_id">Description</label>
-            <textarea class="form-control" th:field="*{description}" id="description_id" rows="3"></textarea>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col">
-            <label for="image_id">Image</label>
-            <input class="form-control" type="text" th:field="*{image}" id="image_id">
-        </div>
-    </div>
-
-    <div class="row mt-4 w-75">
-        <div class="col-3">
-            <div class="form-group">
-                <label for="price_id">Price</label>
-                <input class="form-control" type="text" th:field="*{price}" id="price_id">
-            </div>
-        </div>
-
-        <div class="col-3 offset-md-3">
-            <div class="form-group">
-                <label for="amount_id">Amount</label>
-                <input class="form-control" type="text" th:field="*{amount}" id="amount_id">
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row w-50">
-        <div class="col mt-5">
-
-            <div class="form-group">
-                <label for="genres_id">Select genres</label>
-                <select  data-dropup-auto="false"
-                         data-size="8"
-                         class="form-control selectpicker show-menu-arrow"
-                         th:field="*{allGenres}"
-                         id="genres_id"
-                         multiple data-live-search="true">
-
-                    <option th:each="genre : ${genres}"
-                            th:value="${genre.getGenre()}"
-                            th:text="${genre.getGenre()}">genre
-                    </option>
-
-                </select>
-            </div>
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 offset-md-8">
-            <button class="btn btn-success" type="submit">Add Book</button>
-        </div>
-    </div>
-</form>
-
+<!--Footer fragment-->
+<div th:replace="fragments/footer :: footer"></div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> <!--Important-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
