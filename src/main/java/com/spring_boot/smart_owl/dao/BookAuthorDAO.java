@@ -23,4 +23,8 @@ public class BookAuthorDAO {
     public BookAuthor getBookAuthorById(Long id) {
         return bookAuthorRepository.findBookAuthorById(id);
     }
+
+    public List<BookAuthor> getBookAuthorByGenre(String genre) {
+        return bookAuthorRepository.getBookAuthorByGenre(genre);
+    }
 }

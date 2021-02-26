@@ -17,6 +17,7 @@ public class BookController {
     private final AuthorDAO authorDAO;
     private final BookDAO bookDAO;
     private final GenreDAO genreDAO;
+    private final GenreCountDAO genreCountDAO;
     private final RatingDAO ratingDAO;
 
     public BookController(BookAuthorDAO bookAuthorDAO,
@@ -24,37 +25,21 @@ public class BookController {
                           AuthorDAO authorDAO,
                           BookDAO bookDAO,
                           GenreDAO genreDAO,
+                          GenreCountDAO genreCountDAO,
                           RatingDAO ratingDAO) {
         this.bookAuthorDAO = bookAuthorDAO;
         this.bookGenreDAO = bookGenreDAO;
         this.authorDAO = authorDAO;
         this.bookDAO = bookDAO;
         this.genreDAO = genreDAO;
+        this.genreCountDAO = genreCountDAO;
         this.ratingDAO = ratingDAO;
-    }
-
-    @GetMapping("/authors")
-    public String getAuthors(Model model) {
-        model.addAttribute("authors", authorDAO.showAuthors());
-        return "authors";
-    }
-
-    @GetMapping("/genres")
-    public String getGenres(Model model) {
-        return "genres";
     }
 
     @GetMapping("/books")
     public String getBooks(Model model) {
         model.addAttribute("book_author_list", bookAuthorDAO.getBookAuthors());
         return "store";
-    }
-
-    @GetMapping("/books/new")
-    public String newBook(Model model) {
-        model.addAttribute("book_dto", new BookDTO());
-        model.addAttribute("genres", genreDAO.getGenres());
-        return "new_book";
     }
 
     @PostMapping("/books")
@@ -110,6 +95,13 @@ public class BookController {
         return "redirect:/books/{id}";
     }
 
+    @GetMapping("/books/new")
+    public String newBook(Model model) {
+        model.addAttribute("book_dto", new BookDTO());
+        model.addAttribute("genres", genreDAO.getGenres());
+        return "new_book";
+    }
+
     @PostMapping("/books/{id}/delete")
     public String deleteBookGet(@PathVariable Long id) {
         Long authorId = bookDAO.getBookById(id).getAuthorId();
@@ -120,5 +112,24 @@ public class BookController {
             authorDAO.deleteAuthor(authorId);
         }
         return "redirect:/books";
+    }
+
+    @GetMapping("/authors")
+    public String getAuthors(Model model) {
+        model.addAttribute("authors", authorDAO.showAuthors());
+        return "authors";
+    }
+
+    @GetMapping("/genres")
+    public String getGenres(Model model) {
+        model.addAttribute("genres", genreCountDAO.getGenreCounts());
+        return "genres";
+    }
+
+    @GetMapping("/genres/{id}")
+    public String getGenre(@PathVariable Long id,
+                          Model model) {
+        model.addAttribute("book_author_list_by_genre", bookAuthorDAO.getBookAuthorByGenre(genreDAO.findGenreById(id).getGenre()));
+        return "genre";
     }
 }

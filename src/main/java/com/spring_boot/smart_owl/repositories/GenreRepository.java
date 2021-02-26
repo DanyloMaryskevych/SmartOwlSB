@@ -10,4 +10,7 @@ public interface GenreRepository extends JpaRepository<Genre, Long> {
 
     @Query("from all_genres where genre = ?1")
     Genre findGenreByName(String genre);
+
+    @Query("from all_genres where id = ?1")
+    Genre findGenreById(Long id);
 }

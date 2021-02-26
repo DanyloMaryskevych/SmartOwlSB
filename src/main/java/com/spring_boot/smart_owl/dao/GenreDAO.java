@@ -22,4 +22,8 @@ public class GenreDAO {
     public Genre getGenre(String genre) {
         return genreRepository.findGenreByName(genre);
     }
+
+    public Genre findGenreById(Long id) {
+        return genreRepository.findGenreById(id);
+    }
 }

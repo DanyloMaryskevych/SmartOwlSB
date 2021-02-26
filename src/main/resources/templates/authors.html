@@ -12,12 +12,8 @@
 <!--Navbar fragment-->
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<!--Container-->
-<div th:insert="fragments/container :: container"></div>
-
-<div style="margin: 5px" th:each="author : ${authors}">
-    <p th:text="${author.getName()}"></p>
-</div>
+<!--Container fragment-->
+<div th:insert="fragments/container :: container (authors_fragment = ${authors})"></div>
 
 <!--Footer fragment-->
 <div th:replace="fragments/footer :: footer"></div>

@@ -10,4 +10,7 @@ public interface BookAuthorRepository extends JpaRepository<BookAuthor, Long> {
 
     @Query("from BookAuthor where id = ?1")
     BookAuthor findBookAuthorById(Long id);
+
+    @Query("from BookAuthor ba join BookGenre bg on ba.id = bg.bookId where bg.genre = ?1")
+    List<BookAuthor> getBookAuthorByGenre(String genre);
 }
