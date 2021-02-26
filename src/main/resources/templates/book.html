@@ -37,7 +37,7 @@
                 <!--Genres-->
                 <div class="d-flex">
                     <div th:each="book_genre : ${current_book_genres}">
-                        <a href="#" th:text="${book_genre.getGenre()}" class="btn btn-secondary btn-sm" style="margin: 2px"></a>
+                        <a th:href="@{/genres/{id}(id=${book_genre.getGenreId()})}" th:text="${book_genre.getGenre()}" class="btn btn-secondary btn-sm" style="margin: 2px"></a>
                     </div>
                 </div>
 

@@ -12,7 +12,8 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <!--Container fragment-->
-<div th:insert="fragments/container :: container (book_author_fragment = ${book_author_list_by_genre})"></div>
+<div th:replace="fragments/container :: container (book_author_fragment = ${book_author_list_by_genre},
+                title = ${'Genre: ' + genreTitle})"></div>
 
 <!--Footer fragment-->
 <div th:replace="fragments/footer :: footer"></div>

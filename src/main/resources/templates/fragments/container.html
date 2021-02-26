@@ -7,6 +7,12 @@
         max-width: 75%" class="container">
 
         <!--Store container--> <!--Genre container-->
+        <div class="row mb-5">
+            <div align="center" class="col">
+                <span style="font-size: 34px; margin-bottom: 20px" th:text="${title}"></span>
+            </div>
+        </div>
+<!--        <span th:text="${#lists.isEmpty(book_author_fragment) ? '' : title}"></span>-->
         <div class="row">
             <div class="col-md-3 mt-2" align="center" th:each="book : ${book_author_fragment}">
                 <h4>

@@ -129,6 +129,8 @@ public class BookController {
     @GetMapping("/genres/{id}")
     public String getGenre(@PathVariable Long id,
                           Model model) {
+        String genreTitle = genreDAO.findGenreById(id).getGenre();
+        model.addAttribute("genreTitle", genreTitle);
         model.addAttribute("book_author_list_by_genre", bookAuthorDAO.getBookAuthorByGenre(genreDAO.findGenreById(id).getGenre()));
         return "genre";
     }
