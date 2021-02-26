@@ -4,15 +4,19 @@
     <meta charset="UTF-8">
     <title>Books</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/border.css">
 </head>
 <body>
-
 <!--Navbar fragment-->
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <!--<h3><a href="/books/new" class="btn btn-success" style="margin: 20px" >Add new Book</a></h3>-->
 
 <div th:insert="fragments/container :: container (list = ${book_author_list})"></div>
+
+<!--Footer fragment-->
+<div th:replace="fragments/footer :: footer"></div>
 
 </body>
 </html>
