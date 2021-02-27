@@ -6,36 +6,53 @@
         z-index: 2;
         max-width: 75%" class="container">
 
-        <!--Store container--> <!--Genre container-->
-        <div class="row mb-5">
-            <div align="center" class="col">
+        <!--Container header-->
+        <div class="d-flex justify-content-center">
+            <div class="mb-4 pt-4">
+                <span style="font-family: 'Akaya Telivigala', cursive; font-size: 34px">Smart </span>
                 <span style="font-size: 34px; margin-bottom: 20px" th:text="${title}"></span>
             </div>
         </div>
-<!--        <span th:text="${#lists.isEmpty(book_author_fragment) ? '' : title}"></span>-->
+
+        <!--Store container--> <!--Genre container-->
+        <div th:if="${book_author_fragment != null}">
+
+            <div th:switch="${#lists.size(book_author_fragment)}">
+
+                <div th:case="'0'" class="d-flex justify-content-center">
+                    <p style="font-size: 54px" >Sorry, no books here!</p>
+                </div>
+
+                <div th:case="*" class="row">
+                    <div  class="col-md-3 mt-2" align="center" th:each="book : ${book_author_fragment}">
+                        <h4>
+                            <a style="color: black" th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle()}"></a>
+                        </h4>
+                        <h5 th:text="${'by ' + book.getAuthor()}"></h5>
+                        <p th:text="${book.getPrice() + '$'}"></p>
+                        <img class="img-thumbnail" width="200" height="300" th:src="${book.getImage()}" alt="">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!--Genres container-->
         <div class="row">
-            <div class="col-md-3 mt-2" align="center" th:each="book : ${book_author_fragment}">
-                <h4>
-                    <a style="color: black" th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle()}"></a>
-                </h4>
-                <h5 th:text="${'by ' + book.getAuthor()}"></h5>
-                <p th:text="${book.getPrice() + '$'}"></p>
-                <img class="img-thumbnail" width="200" height="300" th:src="${book.getImage()}" alt="">
+            <div class="col-md-3 mt-5" align="center" th:each="genre_title : ${genres_fragment}">
+
+                <a th:href="@{/genres/{id}(id=${genre_title.getId()})}" class="btn btn-secondary">
+                    <span th:text="${genre_title.getGenre()}"></span>
+                    <span th:text="${genre_title.getCount() &gt; 0} ? ${' (' + genre_title.getCount() + ')'} : ''"></span>
+                </a>
+
             </div>
         </div>
 
         <!--Authors container-->
         <div th:each="author : ${authors_fragment}">
             <p th:text="${author.getName()}"></p>
-        </div>
-
-        <!--Genres container-->
-        <div class="row">
-            <div class="col-md-3 mt-5" align="center" th:each="genre_title : ${genres_fragment}">
-                <a th:href="@{/genres/{id}(id=${genre_title.getId()})}"
-                   th:text="${genre_title.getGenre() + ' (' + genre_title.getCount() + ')'}"
-                   class="btn btn-secondary"></a>
-            </div>
         </div>
 
     </div>
