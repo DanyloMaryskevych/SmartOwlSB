@@ -16,117 +16,19 @@
 <!--Navbar fragment-->
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<!--Container-->
-<div style="background-image: url(https://miro.medium.com/max/11914/0*L5spudfxjpJRzWFL); width: 100%">
-    <div style="
-        min-height: 900px;
-        background-color: white;
-        max-width: 75%" class="container">
-        <div class="row">
-            <!--Image block-->
-            <div class="col-2">
-                <img class="img-thumbnail" style="width:200px" th:src="${current_book.getImage()}">
-            </div>
+<!--&lt;!&ndash;Container&ndash;&gt;-->
+<!--<div style="background-image: url(https://miro.medium.com/max/11914/0*L5spudfxjpJRzWFL); width: 100%">-->
+<!--    <div style="-->
+<!--        min-height: 900px;-->
+<!--        background-color: white;-->
+<!--        padding-top: 15px;-->
+<!--        max-width: 75%" class="container">-->
+<!--        -->
+<!--    </div>-->
+<!--</div>-->
 
-            <!--Text block-->
-            <div class="col-5" style="height: 250px">
-                <h3 th:text="${current_book.getTitle()}">value</h3>
-                <h5 th:text="${'by ' + current_book.getAuthor()}">value</h5>
-
-                <!--Genres-->
-                <div class="d-flex">
-                    <div th:each="book_genre : ${current_book_genres}">
-                        <a th:href="@{/genres/{id}(id=${book_genre.getGenreId()})}" th:text="${book_genre.getGenre()}" class="btn btn-secondary btn-sm" style="margin: 2px"></a>
-                    </div>
-                </div>
-
-                <!--Description collapse-->
-                <div class="mt-4">
-                    <a
-                            onclick="myFunction()"
-                            class="btn-link hide"
-                            data-toggle="collapse"
-                            href="#collapseExample"
-                            role="button"
-                            aria-expanded="false"
-                            aria-controls="collapseExample"
-                    >
-                        <div id="myDIV">Read description</div>
-                    </a>
-                    <div class="collapse" id="collapseExample">
-                        <p th:text="${current_book.getDescription()}"></p>
-                    </div>
-                </div>
-
-                <!--Price-->
-                <p class="font-weight-bold" th:text="${'Price: ' + current_book.getPrice() + '$'}"></p>
-            </div>
-        </div>
-
-        <!--Rating-->
-        <div class="row">
-            <div class="col-2">
-                <form th:method="POST" th:action="@{/books/{id}(id=${current_book.getId()})}"
-                      th:object="${current_rating}">
-
-                    <div class="container">
-                        <div class="starrating d-flex justify-content-center flex-row-reverse">
-                            <input type="radio" id="star5" name="rating" th:field="*{value}" value="5" /><label for="star5" title="5 star"></label>
-                            <input type="radio" id="star4" name="rating" th:field="*{value}" value="4" /><label for="star4" title="4 star"></label>
-                            <input type="radio" id="star3" name="rating" th:field="*{value}" value="3" /><label for="star3" title="3 star"></label>
-                            <input type="radio" id="star2" name="rating" th:field="*{value}" value="2" /><label for="star2" title="2 star"></label>
-                            <input type="radio" id="star1" name="rating" th:field="*{value}" value="1" /><label for="star1" title="1 star"></label>
-                        </div>
-                    </div>
-
-                    <div class="container">
-                        <div class="d-flex justify-content-center">
-                            <input class="btn btn-primary" type="submit" value="Rate">
-                        </div>
-                    </div>
-                </form>
-
-                <!--Rating info-->
-                <div style="width: 200px;">
-                    Rating: <span th:text="${current_book.getRating()}"></span>
-                    by <span th:text="${current_book.getVotes()}"></span> vote(s)
-                </div>
-            </div>
-        </div>
-
-        <!--DELETE button-->
-        <a style="margin-top: 10px" class="btn btn-danger" th:href="@{/books/{id}(id=${current_book.getId()})}"
-           data-toggle="modal" data-target="#modalWindow">DELETE</a>
-
-        <!--'DELETE' Modal window-->
-        <div  id="modalWindow" class="modal mt-5 fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <!--Header-->
-                    <div class="modal-header d-flex justify-content-center">
-                        <h6 class="modal-title">Do you really want to delete this Book?</h6>
-                    </div>
-
-                    <!--Body-->
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-4">
-                                    <form th:method="post" th:action="@{/books/{id}/delete(id=${current_book.getId()})}">
-                                        <input class="btn btn-danger" type="submit" value="YES">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">No</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!--Container fragment-->
+<div th:replace="fragments/container :: container (book = true, title = '')"></div>
 
 <!--Footer fragment-->
 <div th:replace="fragments/footer :: footer"></div>

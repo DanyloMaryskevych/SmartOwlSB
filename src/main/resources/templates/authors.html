@@ -13,7 +13,7 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <!--Container fragment-->
-<div th:insert="fragments/container :: container (authors_fragment = ${authors}, title = 'authors')"></div>
+<div th:replace="fragments/container :: container (authors_fragment = ${authors}, title = 'authors')"></div>
 
 <!--Footer fragment-->
 <div th:replace="fragments/footer :: footer"></div>

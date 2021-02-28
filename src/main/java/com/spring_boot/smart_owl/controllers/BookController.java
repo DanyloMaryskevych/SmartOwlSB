@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping
@@ -18,6 +19,7 @@ public class BookController {
     private final BookDAO bookDAO;
     private final GenreDAO genreDAO;
     private final GenreCountDAO genreCountDAO;
+    private final AuthorCountDAO authorCountDAO;
     private final RatingDAO ratingDAO;
 
     public BookController(BookAuthorDAO bookAuthorDAO,
@@ -26,6 +28,7 @@ public class BookController {
                           BookDAO bookDAO,
                           GenreDAO genreDAO,
                           GenreCountDAO genreCountDAO,
+                          AuthorCountDAO authorCountDAO,
                           RatingDAO ratingDAO) {
         this.bookAuthorDAO = bookAuthorDAO;
         this.bookGenreDAO = bookGenreDAO;
@@ -33,6 +36,7 @@ public class BookController {
         this.bookDAO = bookDAO;
         this.genreDAO = genreDAO;
         this.genreCountDAO = genreCountDAO;
+        this.authorCountDAO = authorCountDAO;
         this.ratingDAO = ratingDAO;
     }
 
@@ -115,9 +119,50 @@ public class BookController {
     }
 
     @GetMapping("/authors")
-    public String getAuthors(Model model) {
-        model.addAttribute("authors", authorDAO.showAuthors());
+    public String getAuthors(Model model,
+                             @RequestParam Optional<String> sort) {
+        List<AuthorCount> list = null;
+        List<AuthorCount> authorCounts = authorCountDAO.getAuthorCounts();
+        // Sort by name
+        List<AuthorCount> authorCountsSortByAscName = authorCountDAO.getAuthorCountsSortByAscName();
+        List<AuthorCount> authorCountsSortByDescName = authorCountDAO.getAuthorCountsSortByDescName();
+
+        // Sort by count
+        List<AuthorCount> authorCountsSortByAscCount = authorCountDAO.getAuthorCountsSortByAscCount();
+        List<AuthorCount> authorCountsSortByDescCount = authorCountDAO.getAuthorCountsSortByDescCount();
+
+
+        if (sort.isEmpty()) list = authorCounts;
+        else {
+            switch (sort.get()) {
+                case "name_asc": {
+                    list = authorCountsSortByAscName;
+                    break;
+                }
+                case "name_desc": {
+                    list = authorCountsSortByDescName;
+                    break;
+                }
+                case "count_asc": {
+                    list = authorCountsSortByAscCount;
+                    break;
+                }
+                case "count_desc": {
+                    list = authorCountsSortByDescCount;
+                    break;
+                }
+            }
+        }
+
+        model.addAttribute("authors", list);
         return "authors";
+    }
+
+    @GetMapping("/authors/{id}")
+    public String getAuthor(@PathVariable Long id,
+                            Model model) {
+        model.addAttribute("authors", authorCountDAO.getAuthorCount(id));
+        return "author";
     }
 
     @GetMapping("/genres")

@@ -1,16 +1,19 @@
-<div th:fragment="container" xmlns:th="http://www.w3.org/1999/xhtml"
+<div th:fragment="container (title)" xmlns:th="http://www.w3.org/1999/xhtml"
         style="background-image: url(https://miro.medium.com/max/11914/0*L5spudfxjpJRzWFL); width: 100%; z-index: 1">
     <div style="
         min-height: 900px;
         background-color: white;
         z-index: 2;
+        padding-bottom: 50px;
         max-width: 75%" class="container">
 
         <!--Container header-->
-        <div class="d-flex justify-content-center">
-            <div class="mb-4 pt-4">
-                <span style="font-family: 'Akaya Telivigala', cursive; font-size: 34px">Smart </span>
-                <span style="font-size: 34px; margin-bottom: 20px" th:text="${title}"></span>
+        <div th:if="${title != ''}">
+            <div class="d-flex justify-content-center">
+                <div class="mb-4 pt-4">
+                    <span style="font-family: 'Akaya Telivigala', cursive; font-size: 34px">Smart </span>
+                    <span style="font-size: 34px; margin-bottom: 20px" th:text="${title}"></span>
+                </div>
             </div>
         </div>
 
@@ -25,18 +28,19 @@
 
                 <div th:case="*" class="row">
                     <div  class="col-md-3 mt-2" align="center" th:each="book : ${book_author_fragment}">
-                        <h4>
-                            <a style="color: black" th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle()}"></a>
-                        </h4>
-                        <h5 th:text="${'by ' + book.getAuthor()}"></h5>
-                        <p th:text="${book.getPrice() + '$'}"></p>
-                        <img class="img-thumbnail" width="200" height="300" th:src="${book.getImage()}" alt="">
+                        <a style="color: black; text-decoration: none" th:href="@{/books/{id}(id=${book.getId()})}">
+                            <h4 th:text="${book.getTitle()}"></h4>
+                            <h5 th:text="${'by ' + book.getAuthor()}"></h5>
+                            <p th:text="${book.getPrice() + '$'}"></p>
+                            <img class="img-thumbnail" width="200" height="300" th:src="${book.getImage()}" alt="">
+                        </a>
                     </div>
                 </div>
 
             </div>
 
         </div>
+
 
         <!--Genres container-->
         <div class="row">
@@ -51,8 +55,199 @@
         </div>
 
         <!--Authors container-->
-        <div th:each="author : ${authors_fragment}">
-            <p th:text="${author.getName()}"></p>
+        <div th:if="${authors_fragment != null}">
+            
+            <div th:each="author : ${authors_fragment}">
+                <a style="color: black" th:href="@{/authors/{id}(id=${author.getId})}"
+                   th:text="${author.getName() + ' (' + author.getCount() + ')'}"></a>
+            </div>
+        </div>
+
+        <!--New book form-->
+        <div th:if="${new_book_form}">
+            <form th:method="POST" th:action="@{/books}" th:object="${book_dto}"
+                  style="width: 600px; margin: auto;  font-size: 18px">
+                <h2>Adding Book to Smart Owl Library</h2>
+
+                <div class="row justify-content-between">
+                    <div class="col">
+                        <label for="title_id">Title</label>
+                        <input class="form-control" type="text" th:field="*{title}" id="title_id">
+                    </div>
+
+                    <div class="col">
+                        <label for="author_id">Author</label>
+                        <input class="form-control" type="text" th:field="*{author}" id="author_id">
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col">
+                        <label for="description_id">Description</label>
+                        <textarea class="form-control" th:field="*{description}" id="description_id" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col">
+                        <label for="image_id">Image</label>
+                        <input class="form-control" type="text" th:field="*{image}" id="image_id">
+                    </div>
+                </div>
+
+                <div class="row mt-4 w-75">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="price_id">Price</label>
+                            <input class="form-control" type="text" th:field="*{price}" id="price_id">
+                        </div>
+                    </div>
+
+                    <div class="col-3 offset-md-3">
+                        <div class="form-group">
+                            <label for="amount_id">Amount</label>
+                            <input class="form-control" type="text" th:field="*{amount}" id="amount_id">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row w-50">
+                    <div class="col mt-5">
+
+                        <div class="form-group">
+                            <label for="genres_id">Select genres</label>
+                            <select  data-dropup-auto="false"
+                                     data-size="8"
+                                     class="form-control selectpicker show-menu-arrow"
+                                     th:field="*{allGenres}"
+                                     id="genres_id"
+                                     multiple data-live-search="true">
+
+                                <option th:each="genre : ${genres}"
+                                        th:value="${genre.getGenre()}"
+                                        th:text="${genre.getGenre()}">genre
+                                </option>
+
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 offset-md-8">
+                        <button class="btn btn-success" type="submit">Add Book</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--Book fragment-->
+        <div th:if="${book}">
+            <!--Book-->
+            <div class="row pt-3">
+                <!--Image block-->
+                <div class="col-2">
+                    <img class="img-thumbnail" style="width:200px" th:src="${current_book.getImage()}">
+                </div>
+
+                <!--Text block-->
+                <div class="col-5" style="height: 250px">
+                    <h3 th:text="${current_book.getTitle()}">value</h3>
+                    <h5 th:text="${'by ' + current_book.getAuthor()}">value</h5>
+
+                    <!--Genres-->
+                    <div class="d-flex">
+                        <div th:each="book_genre : ${current_book_genres}">
+                            <a th:href="@{/genres/{id}(id=${book_genre.getGenreId()})}" th:text="${book_genre.getGenre()}" class="btn btn-secondary btn-sm" style="margin: 2px"></a>
+                        </div>
+                    </div>
+
+                    <!--Description collapse-->
+                    <div class="mt-4">
+                        <a
+                                onclick="myFunction()"
+                                class="btn-link hide"
+                                data-toggle="collapse"
+                                href="#collapseExample"
+                                role="button"
+                                aria-expanded="false"
+                                aria-controls="collapseExample"
+                        >
+                            <div id="myDIV">Read description</div>
+                        </a>
+                        <div class="collapse" id="collapseExample">
+                            <p th:text="${current_book.getDescription()}"></p>
+                        </div>
+                    </div>
+
+                    <!--Price-->
+                    <p class="font-weight-bold" th:text="${'Price: ' + current_book.getPrice() + '$'}"></p>
+                </div>
+            </div>
+
+            <!--Rating-->
+            <div class="row">
+                <div class="col-2">
+                    <form th:method="POST" th:action="@{/books/{id}(id=${current_book.getId()})}"
+                          th:object="${current_rating}">
+
+                        <div class="container">
+                            <div class="starrating d-flex justify-content-center flex-row-reverse">
+                                <input type="radio" id="star5" name="rating" th:field="*{value}" value="5" /><label for="star5" title="5 star"></label>
+                                <input type="radio" id="star4" name="rating" th:field="*{value}" value="4" /><label for="star4" title="4 star"></label>
+                                <input type="radio" id="star3" name="rating" th:field="*{value}" value="3" /><label for="star3" title="3 star"></label>
+                                <input type="radio" id="star2" name="rating" th:field="*{value}" value="2" /><label for="star2" title="2 star"></label>
+                                <input type="radio" id="star1" name="rating" th:field="*{value}" value="1" /><label for="star1" title="1 star"></label>
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            <div class="d-flex justify-content-center">
+                                <input class="btn btn-primary" type="submit" value="Rate">
+                            </div>
+                        </div>
+                    </form>
+
+                    <!--Rating info-->
+                    <div style="width: 200px;">
+                        Rating: <span th:text="${current_book.getRating()}"></span>
+                        by <span th:text="${current_book.getVotes()}"></span> vote(s)
+                    </div>
+                </div>
+            </div>
+
+            <!--DELETE button-->
+            <a style="margin-top: 10px" class="btn btn-danger" th:href="@{/books/{id}(id=${current_book.getId()})}"
+               data-toggle="modal" data-target="#modalWindow">DELETE</a>
+
+            <!--'DELETE' Modal window-->
+            <div  id="modalWindow" class="modal mt-5 fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!--Header-->
+                        <div class="modal-header d-flex justify-content-center">
+                            <h6 class="modal-title">Do you really want to delete this Book?</h6>
+                        </div>
+
+                        <!--Body-->
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-4">
+                                        <form th:method="post" th:action="@{/books/{id}/delete(id=${current_book.getId()})}">
+                                            <input class="btn btn-danger" type="submit" value="YES">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">No</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
