@@ -101,6 +101,13 @@ public class BookController {
         }
         book.setRating(0.0);
         book.setVotes(0);
+        book.setOneStar(0);
+        book.setTwoStars(0);
+        book.setThreeStars(0);
+        book.setFourStars(0);
+        book.setFiveStars(0);
+        book.setPositiveCounter(0.0);
+        book.setWilsonScore(0.0);
         bookDAO.addBook(book);
 
         return "redirect:/books";
@@ -121,7 +128,25 @@ public class BookController {
                             Model model,
                             Rating rating) {
         model.addAttribute("current_rating", rating);
-        if (rating.getValue() != null) bookDAO.updateRating(rating.getValue(), id);
+        double ratingValue = rating.getValue();
+        if (rating.getValue() != null) {
+            switch ((int) ratingValue) {
+                case 1 -> bookDAO.updateOneStar(id);
+                case 2 -> bookDAO.updateTwoStars(id);
+                case 3 -> bookDAO.updateThreeStars(id);
+                case 4 -> {
+                    bookDAO.updateFourStars(id);
+                    bookDAO.updateBookPositiveCounter(id);
+                }
+                case 5 -> {
+                    bookDAO.updateFiveStars(id);
+                    bookDAO.updateBookPositiveCounter(id);
+                }
+            }
+            bookDAO.updateRating(ratingValue, id);
+            bookDAO.updateWilson(id);
+            System.out.println(rating.getValue());
+        }
         return "redirect:/books/{id}";
     }
 

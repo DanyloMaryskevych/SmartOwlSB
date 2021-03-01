@@ -21,6 +21,18 @@ public class BookDAO {
         bookRepository.updateBookRating(rating, id);
     }
 
+    public void updateWilson(Long id) {
+        bookRepository.updateBookWilson(id);
+    }
+
+    public void updateOneStar(Long id) { bookRepository.updateBookOneStar(id);}
+    public void updateTwoStars(Long id) { bookRepository.updateBookTwoStars(id);}
+    public void updateThreeStars(Long id) { bookRepository.updateBookThreeStars(id);}
+    public void updateFourStars(Long id) { bookRepository.updateBookFourStars(id);}
+    public void updateFiveStars(Long id) { bookRepository.updateBookFiveStars(id);}
+
+    public void updateBookPositiveCounter(Long id) { bookRepository.updateBookPositiveCounter(id);}
+
     public void deleteBook(Long id) {
         bookRepository.deleteById(id);
     }

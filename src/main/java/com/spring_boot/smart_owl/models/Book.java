@@ -52,6 +52,27 @@ public class Book {
     private Long authorId;
 
     @Column
+    private Integer oneStar;
+
+    @Column
+    private Integer twoStars;
+
+    @Column
+    private Integer threeStars;
+
+    @Column
+    private Integer fourStars;
+
+    @Column
+    private Integer fiveStars;
+
+    @Column
+    private Double positiveCounter;
+
+    @Column
+    private Double wilsonScore;
+
+    @Column
     private Double rating;
 
     @Column
@@ -122,6 +143,62 @@ public class Book {
 
     public Integer getAmount() {
         return amount;
+    }
+
+    public Integer getOneStar() {
+        return oneStar;
+    }
+
+    public void setOneStar(Integer oneStar) {
+        this.oneStar = oneStar;
+    }
+
+    public Integer getTwoStars() {
+        return twoStars;
+    }
+
+    public void setTwoStars(Integer twoStars) {
+        this.twoStars = twoStars;
+    }
+
+    public Integer getThreeStars() {
+        return threeStars;
+    }
+
+    public void setThreeStars(Integer threeStars) {
+        this.threeStars = threeStars;
+    }
+
+    public Integer getFourStars() {
+        return fourStars;
+    }
+
+    public void setFourStars(Integer fourStars) {
+        this.fourStars = fourStars;
+    }
+
+    public Integer getFiveStars() {
+        return fiveStars;
+    }
+
+    public void setFiveStars(Integer fiveStars) {
+        this.fiveStars = fiveStars;
+    }
+
+    public Double getPositiveCounter() {
+        return positiveCounter;
+    }
+
+    public void setPositiveCounter(Double positiveCounter) {
+        this.positiveCounter = positiveCounter;
+    }
+
+    public Double getWilsonScore() {
+        return wilsonScore;
+    }
+
+    public void setWilsonScore(Double wilsonScore) {
+        this.wilsonScore = wilsonScore;
     }
 
     public void setAmount(Integer amount) {
