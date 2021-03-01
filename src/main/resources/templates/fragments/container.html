@@ -26,37 +26,48 @@
                     <p style="font-size: 54px" >Sorry, no books here!</p>
                 </div>
 
-                <div th:case="*" class="row">
-                    <div  class="col-md-3 mt-2" align="center" th:each="book : ${book_author_fragment}">
-                        <a style="color: black; text-decoration: none" th:href="@{/books/{id}(id=${book.getId()})}">
-                            <h4 th:text="${book.getTitle()}"></h4>
-                            <h5 th:text="${'by ' + book.getAuthor()}"></h5>
-                            <p th:text="${book.getPrice() + '$'}"></p>
-                            <img class="img-thumbnail" width="200" height="300" th:src="${book.getImage()}" alt="">
-                        </a>
+                <div th:case="*">
+                    <div class="row">
+                        <div  class="col-md-3 mt-2" align="center" th:each="book : ${book_author_fragment}">
+                            <a style="color: black; text-decoration: none" th:href="@{/books/{id}(id=${book.getId()})}">
+                                <h4 th:text="${book.getTitle()}"></h4>
+                                <h5 th:text="${'by ' + book.getAuthor()}"></h5>
+                                <p th:text="${book.getPrice() + '$'}"></p>
+                                <img class="img-thumbnail" width="200" height="300" th:src="${book.getImage()}" alt="">
+                            </a>
+                        </div>
                     </div>
+
                 </div>
 
             </div>
 
         </div>
 
-
         <!--Genres container-->
-        <div class="row">
-            <div class="col-md-3 mt-5" align="center" th:each="genre_title : ${genres_fragment}">
+        <div th:if="${genres_fragment != null}">
+            <div class="row">
+                <div class="col-md-3 mt-5" align="center" th:each="genre_title : ${genres_fragment}">
 
-                <a th:href="@{/genres/{id}(id=${genre_title.getId()})}" class="btn btn-secondary">
-                    <span th:text="${genre_title.getGenre()}"></span>
-                    <span th:text="${genre_title.getCount() &gt; 0} ? ${' (' + genre_title.getCount() + ')'} : ''"></span>
-                </a>
+                    <a th:href="@{/genres/{id}(id=${genre_title.getId()})}" class="btn btn-secondary">
+                        <span th:text="${genre_title.getGenre()}"></span>
+                        <span th:text="${genre_title.getCount() &gt; 0} ? ${' (' + genre_title.getCount() + ')'} : ''"></span>
+                    </a>
 
+                </div>
             </div>
         </div>
 
         <!--Authors container-->
         <div th:if="${authors_fragment != null}">
-            
+            <div class="row justify-content-center pr-5">
+                <div class="col-10">
+                    <div class="d-flex justify-content-end">
+
+                    </div>
+                </div>
+            </div>
+
             <div th:each="author : ${authors_fragment}">
                 <a style="color: black" th:href="@{/authors/{id}(id=${author.getId})}"
                    th:text="${author.getName() + ' (' + author.getCount() + ')'}"></a>

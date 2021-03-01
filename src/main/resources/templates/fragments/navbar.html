@@ -44,7 +44,59 @@
 
             <!-- Right elements -->
             <div class="col">
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-between">
+                    <div th:if="${sort}" class="dropdown d-sm-flex align-items-sm-end">
+                        <button
+                                class="btn btn-secondary btn-sm dropdown-toggle"
+                                type="button"
+                                id="dropdownMenu"
+                                data-toggle="dropdown"
+                                aria-expanded="false"
+                        >
+                            Sort by
+                        </button>
+                        <form>
+                            <ul style="font-size: 0.8rem" class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                <li th:if="${books_sort}">
+                                    <button class="dropdown-item pl-2 pb-1" type="submit"
+                                            name="sort" value="price_asc">Price: Low to High</button>
+                                </li>
+                                <li th:if="${books_sort}">
+                                    <button class="dropdown-item pl-2 pb-1" type="submit"
+                                            name="sort" value="price_desc">Price: High to Low</button>
+                                </li>
+
+                                <li>
+                                    <button class="dropdown-item pl-2 pb-1" type="submit"
+                                            name="sort" value="author_asc">Author: A to Z</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item pl-2 pb-1" type="submit"
+                                            name="sort" value="author_desc">Author: Z to A</button>
+                                </li>
+
+                                <li th:if="${authors_sort}">
+                                    <button class="dropdown-item pl-2 pb-1" type="submit"
+                                            name="sort" value="count_asc">Books: Low to High</button>
+                                </li>
+                                <li th:if="${authors_sort}">
+                                    <button class="dropdown-item pl-2 pb-1" type="submit"
+                                            name="sort" value="count_desc">Books: High to Low</button>
+                                </li>
+
+                                <li th:if="${books_sort}">
+                                    <button class="dropdown-item pl-2 pb-1" type="submit"
+                                            name="sort" value="title_asc">Title: A to Z</button>
+                                </li>
+<!--                                <li th:if="${books_sort}">-->
+<!--                                    <button class="dropdown-item pl-2 pb-1" type="submit"-->
+<!--                                            name="sort" value="title_desc">Title: Z to A</button>-->
+<!--                                </li>-->
+                            </ul>
+                        </form>
+
+                    </div>
+                    <div th:unless="${sort}"></div>
                     <a class="nav-link d-sm-flex align-items-sm-center" href="#">
                         <img
                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm6gzGJM5cK-94itPlBy6r4TClx1iVS1z02g&usqp=CAU"

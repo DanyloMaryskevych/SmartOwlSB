@@ -41,8 +41,34 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    public String getBooks(Model model) {
-        model.addAttribute("book_author_list", bookAuthorDAO.getBookAuthors());
+    public String getBooks(Model model,
+                           @RequestParam Optional<String> sort) {
+        List<BookAuthor> bookAuthorList = null;
+        List<BookAuthor> bookAuthors = bookAuthorDAO.getBookAuthors();
+        // Sort by title
+        List<BookAuthor> bookAuthorsSortByTitleAsc = bookAuthorDAO.getBookAuthorsSortByTitleAsc();
+        List<BookAuthor> bookAuthorsSortByTitleDesc = bookAuthorDAO.getBookAuthorsSortByTitleDesc();
+
+        // Sort by author
+        List<BookAuthor> bookAuthorsSortByAuthorAsc = bookAuthorDAO.getBookAuthorsSortByAuthorAsc();
+        List<BookAuthor> bookAuthorsSortByAuthorDesc = bookAuthorDAO.getBookAuthorsSortByAuthorDesc();
+
+        // Sort by price
+        List<BookAuthor> bookAuthorsSortByPriceAsc = bookAuthorDAO.getBookAuthorsSortByPriceAsc();
+        List<BookAuthor> bookAuthorsSortByPriceDesc = bookAuthorDAO.getBookAuthorsSortByPriceDesc();
+
+        if (sort.isEmpty()) bookAuthorList = bookAuthors;
+        else {
+            switch (sort.get()) {
+                case "title_asc" -> bookAuthorList = bookAuthorsSortByTitleAsc;
+                case "title_desc" -> bookAuthorList = bookAuthorsSortByTitleDesc;
+                case "author_asc" -> bookAuthorList = bookAuthorsSortByAuthorAsc;
+                case "author_desc" -> bookAuthorList = bookAuthorsSortByAuthorDesc;
+                case "price_asc" -> bookAuthorList = bookAuthorsSortByPriceAsc;
+                case "price_desc" -> bookAuthorList = bookAuthorsSortByPriceDesc;
+            }
+        }
+        model.addAttribute("book_author_list", bookAuthorList);
         return "store";
     }
 
@@ -135,22 +161,10 @@ public class BookController {
         if (sort.isEmpty()) list = authorCounts;
         else {
             switch (sort.get()) {
-                case "name_asc": {
-                    list = authorCountsSortByAscName;
-                    break;
-                }
-                case "name_desc": {
-                    list = authorCountsSortByDescName;
-                    break;
-                }
-                case "count_asc": {
-                    list = authorCountsSortByAscCount;
-                    break;
-                }
-                case "count_desc": {
-                    list = authorCountsSortByDescCount;
-                    break;
-                }
+                case "author_asc"-> list = authorCountsSortByAscName;
+                case "author_desc"-> list = authorCountsSortByDescName;
+                case "count_asc"-> list = authorCountsSortByAscCount;
+                case "count_desc"-> list = authorCountsSortByDescCount;
             }
         }
 
@@ -176,7 +190,7 @@ public class BookController {
                           Model model) {
         String genreTitle = genreDAO.findGenreById(id).getGenre();
         model.addAttribute("genreTitle", genreTitle);
-        model.addAttribute("book_author_list_by_genre", bookAuthorDAO.getBookAuthorByGenre(genreDAO.findGenreById(id).getGenre()));
+        model.addAttribute("book_author_list_by_genre", bookAuthorDAO.getBookAuthorByGenreSortByPrise(genreTitle));
         return "genre";
     }
 }
