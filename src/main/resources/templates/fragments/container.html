@@ -28,14 +28,43 @@
 
                 <div th:case="*">
                     <div class="row">
-                        <div  class="col-md-3 mt-2" align="center" th:each="book : ${book_author_fragment}">
-                            <a style="color: black; text-decoration: none" th:href="@{/books/{id}(id=${book.getId()})}">
-                                <h4 th:text="${book.getTitle()}"></h4>
-                                <h5 th:text="${'by ' + book.getAuthor()}"></h5>
-                                <p th:text="${book.getPrice() + '$'}"></p>
-                                <img class="img-thumbnail" width="200" height="300" th:src="${book.getImage()}" alt="">
-                            </a>
+
+                        <div class="col-md-6 mt-2" th:each="book : ${book_author_fragment}">
+
+                            <!--1/2 of the row-->
+                            <div style="min-height: 250px" class="row">
+                                <div class="col-4 offset-md-1 mt-2 p-0 justify-content-end">
+                                    <img width="80%" class="img-thumbnail" th:src="${book.getImage()}" alt="">
+                                </div>
+                                <div class="col mt-2 p-0">
+                                    <a style="color: black; text-decoration: none" th:href="@{/books/{id}(id=${book.getId()})}">
+                                        <h4 th:text="${book.getTitle()}"></h4>
+                                        <h5 th:text="${'by ' + book.getAuthor()}"></h5>
+                                    </a>
+
+                                    <div class="container p-0">
+                                        <div  class="row">
+
+                                            <div class="col pt-3">
+                                                <div class="d-flex justify-content-start">
+                                                    <p style="font-size: 2.2rem; line-height: 1em"
+                                                       class="m-0" th:text="${book.getRating()}"></p>
+                                                    <i style="color: #ffca08; font-size: 1.4rem" class="fa fa-star pt-1" aria-hidden="true"></i>
+                                                    <p style="font-size: 1.1rem" class="pl-1" th:text="${book.getVotes() + ' mark(s)'}"></p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <p style="font-size: 1.1rem; line-height: 1em">out of 5</p>
+                                    </div>
+
+                                    <span style="font-size: 1.5rem; font-weight: bold" th:text="${book.getPrice() + '$'}"></span>
+                                </div>
+                            </div>
                         </div>
+
+
+
                     </div>
 
                 </div>

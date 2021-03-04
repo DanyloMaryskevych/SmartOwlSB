@@ -13,18 +13,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Transactional
     @Modifying
-    @Query("update books set rating = (rating * votes + ?1)/(votes + 1), votes = votes + 1 where id = ?2")
-    void updateBookRating(Double rating, Long id);
-
-    @Transactional
-    @Modifying
-    @Query("update books set wilsonScore = ( positiveCounter / votes + 1.9208 / votes - 1.96 * " +
-            "sqrt( (positiveCounter * (votes - positiveCounter)) / (votes * votes * votes) + 0.9604 / (votes * votes)) ) " +
-            "/ (1 + 3.8416/votes)  where id = ?1")
-    void updateBookWilson(Long id);
-
-    @Transactional
-    @Modifying
     @Query("update books set oneStar = oneStar + 1 where id = ?1")
     void updateBookOneStar(Long id);
 
@@ -52,6 +40,18 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Modifying
     @Query("update books set positiveCounter = positiveCounter + 1 where id = ?1")
     void updateBookPositiveCounter(Long id);
+
+    @Transactional
+    @Modifying
+    @Query("update books set rating = (rating * votes + ?1)/(votes + 1), votes = votes + 1 where id = ?2")
+    void updateBookRating(Double rating, Long id);
+
+    @Transactional
+    @Modifying
+    @Query("update books set wilsonScore = ( positiveCounter / votes + 1.9208 / votes - 1.96 * " +
+            "sqrt( (positiveCounter * (votes - positiveCounter)) / (votes * votes * votes) + 0.9604 / (votes * votes)) ) " +
+            "/ (1 + 3.8416/votes)  where id = ?1")
+    void updateBookWilson(Long id);
 
     @Query("select count(b.authorId) from books b where b.authorId = ?1")
     Integer countAuthorsById(Long id);
